@@ -424,7 +424,9 @@ do
       CHECK=true
     ;;
     (*)
-      if [[ "${arg}" =~ ^--from= ]]; then
+      if [[ "${arg}" =~ ^production ]]; then
+        DEPLOY_ENVIRONMENT="${arg}"
+      elif [[ "${arg}" =~ ^--from= ]]; then
         FROM="${arg##--from=}"
       elif [[ "${arg}" =~ ^--with= ]]; then
         WITH="${arg##--with=}"

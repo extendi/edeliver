@@ -47,7 +47,6 @@ To append metadata permanentely you can set the `AUTO_VERSION` configuration var
 
 ##### Available metadata which can be appended to the release version
 
-
   * `[git-]revision` Appends sha1 git revision of current HEAD.
   * `[git-]branch` Appends the current branch that is built.
   * `[git-]branch-unless-master` Appends the current branch that is built but only unless it is the master branch.
@@ -60,9 +59,7 @@ To append metadata permanentely you can set the `AUTO_VERSION` configuration var
     This makes more sense, if the branch name is also appended as metadata to avoid
     conflicts from different branches.
 
-
 Using __commit count accross all branches__ (`commit-count[-all[-branches]`) __or__ using the __build date__ (`[build-]date`) __as first metadata__ to append, enables edeliver to __consider__ that values __when sorting__ versions. Using `[git-]revision` or commit count for the current branch in conjunction with the branch name (`commit-count-branch+branch`) enables you to __uniquely identify__ the built/deployed __version__. If the revision is used, __edeliver can display the commit message for that version__ (and the 5 previous commit messages) if `edeliver version [staging|production]` is used. To achieve both (sorting and identifying versions) and to see whether a feature branch is built/deployed, the following permanent auto-versioning option is recommended: `AUTO_VERSION=commit-count+git-revision+branch-unless-master`.
-
 
 For more information also try `mix edeliver help upgrade`, `mix edeliver help release` or `mix help release.version`.
 

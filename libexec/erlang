@@ -38,13 +38,15 @@ set_build_hosts() {
 
 # sets the deploy host, user and path as deliver hosts and path
 set_deploy_hosts() {
-  if [ "$DEPLOY_ENVIRONMENT" = "production" ]; then
-    export HOSTS=$PRODUCTION_HOSTS
-    export APP_USER=$PRODUCTION_USER
-  else
+  if [ "$DEPLOY_ENVIRONMENT" = "staging" ]; then
     export HOSTS=$STAGING_HOSTS
     export APP_USER=$STAGING_USER
     export DELIVER_TO=$TEST_AT
+  else
+    VHOSTS="${DEPLOY_ENVIRONMENT^^}_HOSTS"
+    export HOSTS=${!VHOSTS}
+    export APP_USER=$PRODUCTION_USER
+    export DEPLOY_ENVIRONMENT="production"
   fi
 }
 
@@ -66,14 +68,14 @@ require_deploy_config() {
 
   REQUIRED_CONFIGS+=("APP")
 
-  if [ "$DEPLOY_ENVIRONMENT" = "production" ]; then
-    REQUIRED_CONFIGS+=("PRODUCTION_HOSTS")
-    REQUIRED_CONFIGS+=("PRODUCTION_USER")
-    REQUIRED_CONFIGS+=("DELIVER_TO")
-  else
+  if [ "$DEPLOY_ENVIRONMENT" = "staging" ]; then
     REQUIRED_CONFIGS+=("STAGING_HOSTS")
     REQUIRED_CONFIGS+=("STAGING_USER")
     REQUIRED_CONFIGS+=("TEST_AT")
+  else
+    REQUIRED_CONFIGS+=("PRODUCTION_HOSTS")
+    REQUIRED_CONFIGS+=("PRODUCTION_USER")
+    REQUIRED_CONFIGS+=("DELIVER_TO")
   fi
 
   OPTIONAL_CONFIGS+=("VERSION")
